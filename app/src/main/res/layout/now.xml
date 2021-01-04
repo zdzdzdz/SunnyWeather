@@ -23,7 +23,7 @@
             android:id="@+id/settingsBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="75dp"
             android:layout_marginTop="5dp"
             android:layout_gravity="right"
             android:background="@drawable/ic_settings" />
@@ -32,7 +32,7 @@
             android:id="@+id/shareBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="60dp"
+            android:layout_marginEnd="120dp"
             android:layout_marginTop="5dp"
             android:layout_gravity="right"
             android:background="@drawable/ic_backup" />

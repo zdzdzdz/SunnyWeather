@@ -70,12 +70,8 @@ class WeatherActivity : AppCompatActivity() {
         swipeRefresh.setOnRefreshListener {
             refreshWeather()
         }
-        //定时刷新天气
-//        val button1: Button = findViewById(R.id.radioButton_yes)
-//
-//        button1.setOnClickListener {
-//            handler?.postDelayed(runnable, 1000 * 60)
-//        }
+
+
 
         //搜索按钮
         navBtn.setOnClickListener {
@@ -112,20 +108,8 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     //定时刷新天气
-    private var handler: Handler? = Handler()
-    private val runnable: Runnable = object : Runnable {
-        override fun run() {
-            viewModel.refreshWeather(viewModel.locationLng, viewModel.locationLat)
-            swipeRefresh.isRefreshing = true
-           // var time =
-            handler?.postDelayed(this, 1000 * 120) // 间隔120秒
-        }
 
-    }
-    override fun onDestroy() {
-        handler?.removeCallbacks(runnable) //停止刷新
-        super.onDestroy()
-    }
+
 
 
     //显示天气
@@ -142,17 +126,7 @@ class WeatherActivity : AppCompatActivity() {
         currentAQI.text = currentPM25Text
         nowLayout.setBackgroundResource(getSky(realtime.skycon).bg)
 
-        //分享按钮
-//        shareBtn.setOnClickListener {
-//            var share_intent = Intent()
-//            share_intent.action = Intent.ACTION_SEND //设置分享行为
-//            share_intent.type = "text/plain" //设置分享内容的类型
-//            share_intent.putExtra(Intent.EXTRA_SUBJECT, "share") //添加分享内 oid")
-//            share_intent.putExtra(Intent.EXTRA_TEXT, "今天的气温是${realtime.temperature.toInt()} ℃");//添加分享内容
-//            //创建分享的Dialog
-//            share_intent = Intent.createChooser(share_intent, "share")
-//            startActivity(share_intent)
-//        }
+
 
         //填充wind_index布局中的数据
         speedText.text = "${realtime.wind.speed.toString()} km/h"
@@ -190,7 +164,20 @@ class WeatherActivity : AppCompatActivity() {
         carWashingText.text = lifeIndex.carWashing[0].desc
         comfortText.text = lifeIndex.comfort[0].desc
         weatherLayout.visibility = View.VISIBLE
-
+        //分享按钮
+        shareBtn.setOnClickListener {
+            var share_intent = Intent()
+            share_intent.action = Intent.ACTION_SEND //设置分享行为
+            share_intent.type = "text/plain" //设置分享内容的类型
+            share_intent.putExtra(Intent.EXTRA_SUBJECT, "share") //添加分享内 oid")
+            share_intent.putExtra(Intent.EXTRA_TEXT, "${viewModel.placeName}的气温是" +
+                    "${realtime.temperature.toInt()} ℃"+
+                    "\n空气指数是${realtime.airQuality.aqi.chn.toInt()}"
+                    +" \n感冒${lifeIndex.coldRisk[0].desc}"+"\n洗车${lifeIndex.carWashing[0].desc}");//添加分享内容
+            //创建分享的Dialog
+            share_intent = Intent.createChooser(share_intent, "share")
+            startActivity(share_intent)
+        }
 
 
 
